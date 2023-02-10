@@ -48,9 +48,9 @@ likes_dislikes (
 
 INSERT INTO likes_dislikes (user_id, post_id, like)
 VALUES
-    ("u001", "p002", "1"),
-    ("u002", "p001", "1"), 
-    ("u003", "p002", "1");
+    ("u001", "p002", 1),
+    ("u002", "p001", 1), 
+    ("u003", "p002", 1);
 
 DROP TABLE likes_dislikes;
 
