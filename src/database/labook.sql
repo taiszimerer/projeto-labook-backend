@@ -31,9 +31,9 @@ posts (
 
 INSERT INTO posts (id, creator_id, content, likes, dislikes)
 VALUES
-	("p001", "u001", "Bom dia de sol!!", "1", "1"),
-	("p002", "u002", "Sextou em!", "1", "0"),
-	("p003", "u003", "Hoje ninguem vai estragar meu dia :D", "0", "0");
+	("p001", "u001", "Bom dia de sol!!", 1, 2),
+	("p002", "u002", "Sextou em!", 3, 0),
+	("p003", "u003", "Hoje ninguem vai estragar meu dia :D", 1, 0);
 
 DROP TABLE posts;
 
@@ -48,9 +48,9 @@ likes_dislikes (
 
 INSERT INTO likes_dislikes (user_id, post_id, like)
 VALUES
-    ("u001", "p002", "1"),
-    ("u002", "p001", "1"), 
-    ("u003", "p002", "1");
+    ("u001", "p002", 1),
+    ("u002", "p001", 1), 
+    ("u003", "p002", 1);
 
 DROP TABLE likes_dislikes;
 
