@@ -1,6 +1,5 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import cors from 'cors'
-import { db } from './database/knex'
 import { usersRouter } from './router/usersRouter'
 import { postsRouter } from './router/postsRouter'
 
