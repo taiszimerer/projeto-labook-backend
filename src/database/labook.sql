@@ -27,6 +27,8 @@ posts (
     created_at TEXT DEFAULT (DATETIME()) NOT NULL,
     updated_at TEXT DEFAULT (DATETIME()) NOT NULL, 
     FOREIGN KEY (creator_id) REFERENCES users (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 INSERT INTO posts (id, creator_id, content, likes, dislikes)
@@ -42,8 +44,12 @@ likes_dislikes (
     user_id TEXT NOT NULL,
     post_id TEXT NOT NULL,
     like INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,   
     FOREIGN KEY (post_id) REFERENCES posts (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 INSERT INTO likes_dislikes (user_id, post_id, like)
