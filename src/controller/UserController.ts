@@ -1,8 +1,12 @@
 import { Request, Response } from "express"
+import { UserBusiness } from "../business/UserBusiness"
 import { db } from "../database/knex"
+import { USER_ROLES } from "../types"
 
-export class UsersController {
-    constructor() {}
+export class UserController {
+    constructor(
+        private userBusiness: UserBusiness
+    ) {}
 
     //Get users ok //
     public getUsers = async (req: Request, res: Response) => {
@@ -25,13 +29,13 @@ export class UsersController {
     }
 
     //Signup ok //
-    public singUp = async (req: Request, res: Response) => {
+    public singup = async (req: Request, res: Response) => {
         try {
             const id = req.body.id as string
             const name = req.body.name as string
             const email = req.body.email as string
             const password = req.body.password as string
-            const role = req.body.role as string
+            const role = req.body.role as USER_ROLES
     
             if (typeof id !== "string") {
                 res.status(400)
@@ -52,8 +56,6 @@ export class UsersController {
                 res.status(400)
                 throw new Error("'password' deve ser string")
             }
-    
-            //duvida: ver se coloca verificação para o role ou nao 
     
             await db("users").insert({ id, name, email, password, role })
             res.status(201).send("Cadastro de usuário registrado com sucesso")
