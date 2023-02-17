@@ -32,6 +32,9 @@ export interface PostDB {
     updated_at: string
 }
 
+export interface PostWithCreatorsDB extends PostDB {
+    creator_name: string
+}
 
 export interface UserDB {
     id: string,

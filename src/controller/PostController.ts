@@ -1,77 +1,51 @@
 import { Request, Response } from "express"
-// import { db } from "../database/BaseDatabase"
+import { PostBusiness } from "../business/PostBusiness";
+import { CreatePostInputDTO, GetPostInputDTO } from "../dtos/postDTO";
+import { BaseError } from "../errors/BaseError";
 
-export class PostsController {
-    constructor() {}
+export class PostController {
+    constructor(
+        private postBusiness: PostBusiness
+    ) {}
 
-    //Get Posts OK //
-    // public getPosts = async (req: Request, res: Response) => {
-    //     try {
-    
-    //         //requer token JWT para acessar 
-    
-    //         const result = await db.select("*").from("posts")
-    //         res.status(200).send(result)
-    
-    //     } catch (error: any) {
-    //         console.log(error)
-    //         if (res.statusCode === 200) {
-    //             res.status(500)
-    //         }
-    
-    //         if (error instanceof Error) {
-    //             res.send(error.message)
-    //         } else {
-    //             res.send("Erro inesperado")
-    //         }
-    //     }
-    // }
+    public getPosts = async (req: Request, res: Response) => {
+        try {
 
-    //Create Post OK //
-    // public createPost = async (req: Request, res: Response) => {
-    //     try {
-    //         const id = req.body.id as string
-    //         const creator_id = req.body.creator_id as string
-    //         const content = req.body.content as string
-    //         const likes = req.body.likes as number
-    //         const dislikes = req.body.dislikes as number
+        const input: GetPostInputDTO = {
+            token: req.headers.authorization
+        }
+
+        const output = await this.postBusiness.getPosts(input)
+        res.status(200).send(output)
+        
+        } catch (error) {
+            console.log(error)
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
+    public createPost = async (req: Request, res: Response) => {
+        try {
+            const input: CreatePostInputDTO = {
+                token: req.headers.authorization,
+                content: req.body.content
+            }
     
-    //         if (typeof id !== "string") {
-    //             res.status(400)
-    //             throw new Error("'id' deve ser string")
-    //         }
-    
-    //         if (typeof creator_id !== "string") {
-    //             res.status(400)
-    //             throw new Error("'creator_id' deve ser string")
-    //         }
-    
-    //         if (typeof content !== "string") {
-    //             res.status(400)
-    //             throw new Error("'content' deve ser string")
-    //         }
-    
-    //         if (typeof likes !== "number") {
-    //             res.status(400)
-    //             throw new Error("'likes' deve ser do tipo number")
-    //         }
-    
-    //         if (typeof dislikes !== "number") {
-    //             res.status(400)
-    //             throw new Error("'dislikes' deve ser do tipo number")
-    //         }
-    
-    //         await db("posts").insert({ id, creator_id, content, likes, dislikes })
-    //         res.status(201).send("Post criado com sucesso")
-    
-    //     } catch (error: any) {
-    //         console.log(error)
-    //         if (res.statusCode === 200) {
-    //             res.status(500)
-    //         }
-    //         res.send(error.message)
-    //     }
-    // }
+            const output = await this.postBusiness.createPost(input)
+            res.status(201).end()
+        } catch (error) {
+            console.log(error)
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
 
 //     //Edit Post OK // 
 //     public editPost = async (req: Request, res: Response) => {
