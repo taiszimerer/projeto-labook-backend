@@ -27,6 +27,7 @@ export class UserController {
             }
         }
     }
+    
     public login = async (req: Request, res: Response) => {
         try {
             const input: LoginInputDTO = {

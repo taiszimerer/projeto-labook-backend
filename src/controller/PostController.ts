@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { PostBusiness } from "../business/PostBusiness";
-import { CreatePostInputDTO, GetPostInputDTO } from "../dtos/postDTO";
+import { CreatePostInputDTO, EditPostInputDTO, GetPostInputDTO } from "../dtos/postDTO";
 import { BaseError } from "../errors/BaseError";
 
 export class PostController {
@@ -46,6 +46,27 @@ export class PostController {
             }
         }
     }
+
+    public editPost = async (req: Request, res: Response) => {
+        try {
+            const input: EditPostInputDTO = {
+                idToEdit: req.params.id,
+                content: req.body.content,
+                token: req.headers.authorization
+            }
+    
+            const output = await this.postBusiness.editPost(input)
+            res.status(200).end()
+        } catch (error) {
+            console.log(error)
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
 
 //     //Edit Post OK // 
 //     public editPost = async (req: Request, res: Response) => {
